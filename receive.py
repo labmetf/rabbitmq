@@ -16,14 +16,10 @@ queue_name = result.method.queue
 #    sys.stderr.write("Usage: %s [binding_key]...\n" % sys.argv[0])
 #    sys.exit(1)
 
-binding_keys = ['cluster1.#','cluster2.#']
+binding_keys = ['bms-value']
 for binding_key in binding_keys:
     channel.queue_bind(
         exchange='topic_logs', queue=queue_name, routing_key=binding_key)
-    print("binding keys :")
-    print(binding_keys)
-    print("queue name")
-    print(queue_name)
 
 
 print(' [*] Waiting for logs. To exit press CTRL+C')
@@ -35,10 +31,11 @@ def callback(ch, method, properties, body):
       x = body
       y = body.decode("utf-8")
       z = json.loads(y)
-      print(type(z))
+      
       val = z["value"]
       for i in val :
         print (i)
+      print("success")
     except :
       print(body)
       print("false")
